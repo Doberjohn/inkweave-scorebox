@@ -6,9 +6,7 @@ interface PageFooterProps {
 export function PageFooter({ canReset, onReset }: PageFooterProps) {
   return (
     <footer className="page-footer">
-      <span className="footer-credit">
-        Built on the Inkweave system · Lorcana Core · scores persist locally
-      </span>
+      <span className="footer-credit">Built on the Inkweave system</span>
       {canReset && (
         <button
           type="button"

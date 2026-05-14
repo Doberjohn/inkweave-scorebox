@@ -247,9 +247,13 @@ button { font-family: inherit; }
   transform: none !important;
 }
 .plus-glyph {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
-  font-weight: 400;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1em;
 }
 
 /* ── Legend ── collapsible sidebar card ──────────────────────── */

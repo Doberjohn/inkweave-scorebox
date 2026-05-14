@@ -1,11 +1,10 @@
 import { useRef, useState, type FormEvent } from "react";
 
 interface HeroProps {
-  playerCount: number;
   onAddPlayer: (name: string) => void;
 }
 
-export function Hero({ playerCount, onAddPlayer }: HeroProps) {
+export function Hero({ onAddPlayer }: HeroProps) {
   const [name, setName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,15 +31,17 @@ export function Hero({ playerCount, onAddPlayer }: HeroProps) {
         <input
           ref={inputRef}
           type="text"
+          name="player-name"
           className="add-input"
-          placeholder={playerCount === 0 ? "First friend's name…" : "Add another friend…"}
+          placeholder="Type a friend's name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={24}
           aria-label="Player name"
         />
         <button type="submit" className="cta" disabled={!name.trim()}>
-          <span className="plus-glyph">+</span> Seat at table
+          <span className="plus-glyph" aria-hidden="true">+</span>
+          <span>Add friend</span>
         </button>
       </form>
     </section>

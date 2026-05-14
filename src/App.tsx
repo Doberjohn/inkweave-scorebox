@@ -32,10 +32,7 @@ export default function App() {
       <main className="page">
         <PageHeader />
         <div className="top-row">
-          <Hero
-            playerCount={players.length}
-            onAddPlayer={(name) => dispatch({ type: "ADD_PLAYER", name })}
-          />
+          <Hero onAddPlayer={(name) => dispatch({ type: "ADD_PLAYER", name })} />
           <Legend />
         </div>
 
