@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { GlowField } from "@/components/GlowField";
 import { PageHeader } from "@/components/PageHeader";
 import { Hero } from "@/components/Hero";
@@ -26,6 +27,7 @@ export default function App() {
 
   return (
     <>
+      <Analytics />
       <GlowField />
       <main className="page">
         <PageHeader />
