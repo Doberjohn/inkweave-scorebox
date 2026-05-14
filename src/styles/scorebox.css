@@ -516,18 +516,24 @@ button { font-family: inherit; }
   font-variant-numeric: tabular-nums;
 }
 .is-leader .score-num {
+  text-shadow: none;
+}
+/* Put the gradient on the element that actually scales. When the gradient
+   lives on the parent (.score-num) but the child (.animated-num) scales,
+   the child's glyphs grow beyond the parent's gradient box and Chrome
+   re-clips the gradient every frame — that's the flicker. Painting the
+   gradient on the scaling element keeps clip and transform in sync. */
+.is-leader .animated-num {
   background: linear-gradient(180deg, #faf1d3 0%, #ffb900 60%, #b29861 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: none;
 }
 .animated-num.is-flash {
   animation: numflash 0.6s var(--ease-bounce);
 }
-/* Leader text uses background-clip: text, which conflicts with filter:
-   drop-shadow during animation (gradient layer re-rasterises and flickers).
-   Scale-only flash for leaders; the gold gradient is the emphasis. */
+/* Leader keeps scale but drops the filter step — drop-shadow on
+   background-clip: text triggers the same re-rasterisation flicker. */
 .is-leader .animated-num.is-flash {
   animation: numflash-leader 0.6s var(--ease-bounce);
 }
