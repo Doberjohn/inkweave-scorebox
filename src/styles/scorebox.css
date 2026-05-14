@@ -525,10 +525,21 @@ button { font-family: inherit; }
 .animated-num.is-flash {
   animation: numflash 0.6s var(--ease-bounce);
 }
+/* Leader text uses background-clip: text, which conflicts with filter:
+   drop-shadow during animation (gradient layer re-rasterises and flickers).
+   Scale-only flash for leaders; the gold gradient is the emphasis. */
+.is-leader .animated-num.is-flash {
+  animation: numflash-leader 0.6s var(--ease-bounce);
+}
 @keyframes numflash {
   0%   { transform: scale(1); }
   35%  { transform: scale(1.18); filter: drop-shadow(0 0 14px rgba(255, 185, 0, 0.7)); }
   100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+}
+@keyframes numflash-leader {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
 }
 .animated-num { display: inline-block; transition: filter 0.3s var(--ease-smooth); }
 .score-label {
