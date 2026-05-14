@@ -12,7 +12,7 @@ function intEnv(name: string, value: string | undefined, fallback: number): numb
 export const RARITY_POINTS: Readonly<Record<RarityId, number>> = {
   "foil-rare":       intEnv("VITE_POINTS_FOIL_RARE",       import.meta.env.VITE_POINTS_FOIL_RARE,       1),
   "super-rare":      intEnv("VITE_POINTS_SUPER_RARE",      import.meta.env.VITE_POINTS_SUPER_RARE,      2),
-  "foil-super-rare": intEnv("VITE_POINTS_FOIL_SUPER_RARE", import.meta.env.VITE_POINTS_FOIL_SUPER_RARE, 4),
+  "foil-super-rare": intEnv("VITE_POINTS_FOIL_SUPER_RARE", import.meta.env.VITE_POINTS_FOIL_SUPER_RARE, 3),
   "legendary":       intEnv("VITE_POINTS_LEGENDARY",       import.meta.env.VITE_POINTS_LEGENDARY,       4),
   "epic":            intEnv("VITE_POINTS_EPIC",            import.meta.env.VITE_POINTS_EPIC,            5),
   "foil-legendary":  intEnv("VITE_POINTS_FOIL_LEGENDARY",  import.meta.env.VITE_POINTS_FOIL_LEGENDARY,  8),
