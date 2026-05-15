@@ -1566,3 +1566,36 @@ button { font-family: inherit; }
   background: var(--c-filter-gradient);
   border-color: transparent;
 }
+
+/* Group the footer-right actions so Share + Reset sit cleanly together */
+.footer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.share-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: var(--r-lg);
+  background: var(--c-filter-gradient);
+  color: var(--c-filter-text);
+  border: none;
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  box-shadow: var(--shadow-filter);
+  transition: transform 0.2s var(--ease-snappy);
+}
+.share-trigger:hover { transform: scale(1.03); }
+.share-trigger:focus-visible {
+  outline: 2px solid var(--c-primary-500);
+  outline-offset: 3px;
+}

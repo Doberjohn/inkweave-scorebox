@@ -60,6 +60,7 @@ export default function App() {
         )}
 
         <PageFooter
+          players={players}
           canReset={players.length > 0}
           onReset={() => {
             if (window.confirm("Reset everything? This clears all players and pulls.")) {
