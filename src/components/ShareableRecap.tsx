@@ -12,6 +12,11 @@ const DATE_FMT = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
+// Largest number of runner-up rows we render before collapsing the
+// remainder into a "+ N more" line. Keeps the recap inside 1080x1080
+// even for large groups.
+const REST_VISIBLE_LIMIT = 4;
+
 function rankLabel(rank: number): string {
   if (rank === 1) return "1ST";
   if (rank === 2) return "2ND";
@@ -104,7 +109,14 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
 
       {recap.rest.length > 0 && (
         <ul className="shareable-recap__rest">
-          {recap.rest.map((p) => <RunnerUpRow key={p.name + p.rank} player={p} />)}
+          {recap.rest.slice(0, REST_VISIBLE_LIMIT).map((p) => (
+            <RunnerUpRow key={p.name + p.rank} player={p} />
+          ))}
+          {recap.rest.length > REST_VISIBLE_LIMIT && (
+            <li className="shareable-recap__rest-more">
+              + {recap.rest.length - REST_VISIBLE_LIMIT} more
+            </li>
+          )}
         </ul>
       )}
 
@@ -119,7 +131,6 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
             <span className="shareable-recap__inkweave-divider" aria-hidden="true" />
             <span className="shareable-recap__inkweave-section">Scorebox</span>
           </div>
-          <span className="shareable-recap__footer-row-divider" aria-hidden="true" />
           <div className="shareable-recap__attribution">
             <span className="shareable-recap__attribution-eyebrow">Scoring system by</span>
             <img
@@ -129,7 +140,6 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
             />
           </div>
         </div>
-        <div className="shareable-recap__url">scorebox.inkweave.ink</div>
       </footer>
     </div>
   );

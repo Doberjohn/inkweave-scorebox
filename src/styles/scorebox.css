@@ -1419,6 +1419,14 @@ button { font-family: inherit; }
   letter-spacing: 0.4px;
   white-space: nowrap;
 }
+.shareable-recap__rest-more {
+  font-size: 16px;
+  color: var(--c-text-dim);
+  font-style: italic;
+  letter-spacing: 0.4px;
+  text-align: center;
+  padding: 2px 0;
+}
 
 .shareable-recap__footer {
   position: relative;
@@ -1442,12 +1450,6 @@ button { font-family: inherit; }
   justify-content: center;
   gap: 80px;
 }
-.shareable-recap__footer-row-divider {
-  display: inline-block;
-  width: 1px;
-  height: 96px;
-  background: var(--c-surface-border);
-}
 
 /* Inkborn Heroes attribution — mirrors the InkbornCredit card in the live
    app. Sits above the Inkweave brand mark so anyone seeing the image knows
@@ -1456,7 +1458,7 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 .shareable-recap__attribution-eyebrow {
   font-size: 16px;
@@ -1497,11 +1499,6 @@ button { font-family: inherit; }
   text-transform: uppercase;
   color: var(--c-text-muted);
   font-weight: 500;
-}
-.shareable-recap__url {
-  font-size: 18px;
-  color: var(--c-text-dim);
-  letter-spacing: 1.8px;
 }
 
 /* ── Share Results Modal ─────────────────────────────────────── */
