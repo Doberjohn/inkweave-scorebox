@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { GlowField } from "@/components/GlowField";
 import { PageHeader } from "@/components/PageHeader";
 import { Hero } from "@/components/Hero";
-import { Legend } from "@/components/Legend";
+import { InkbornCredit } from "@/components/InkbornCredit";
 import { PlayerCard } from "@/components/PlayerCard";
 import { PullsModal } from "@/components/PullsModal";
 import { EmptyState } from "@/components/EmptyState";
@@ -33,7 +33,7 @@ export default function App() {
         <PageHeader />
         <div className="top-row">
           <Hero onAddPlayer={(name) => dispatch({ type: "ADD_PLAYER", name })} />
-          <Legend />
+          <InkbornCredit />
         </div>
 
         {players.length === 0 ? (

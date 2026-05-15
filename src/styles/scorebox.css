@@ -268,115 +268,88 @@ button { font-family: inherit; }
   height: 1em;
 }
 
-/* ── Legend ── collapsible sidebar card ──────────────────────── */
-.legend {
+/* ── Inkborn Credit ── sidebar card crediting the scoring system ─ */
+.inkborn-credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 20px;
   background: linear-gradient(180deg, rgba(26, 26, 46, 0.6) 0%, rgba(15, 15, 25, 0.6) 100%);
   border: 1px solid var(--c-surface-border);
   border-radius: var(--r-card);
-  padding: 4px;
   backdrop-filter: blur(10px);
   position: sticky;
   top: 16px;
-  transition: border-color 0.2s var(--ease-smooth);
 }
-.legend.is-open { padding: 4px 14px 14px; }
-.legend.is-open .legend-header { border-bottom: 1px solid var(--c-surface-border); }
-.legend.is-collapsed:hover { border-color: rgba(212, 175, 55, 0.35); }
-.legend-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 14px;
-  background: transparent;
-  border: none;
-  color: inherit;
-  font-family: var(--font-body);
-  cursor: pointer;
-  text-align: left;
-  border-radius: var(--r-md);
-  margin-bottom: 0;
-  transition: background 0.2s var(--ease-smooth);
-}
-.legend.is-open .legend-header { padding: 12px 4px; margin-bottom: 10px; border-radius: 0; }
-.legend.is-collapsed .legend-header:hover { background: rgba(212, 175, 55, 0.06); }
-.legend-title-block {
-  display: flex; flex-direction: column; gap: 2px; min-width: 0;
-}
-.legend-title {
-  font-family: var(--font-hero);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--c-text);
-  letter-spacing: -0.005em;
-  line-height: 1.1;
-}
-.legend-sub {
-  font-size: 10px;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  color: var(--c-text-dim);
-  font-weight: 600;
-}
-.legend.is-collapsed:hover .legend-sub { color: var(--c-primary-500); }
-.legend-caret {
-  color: var(--c-text-dim);
-  font-size: 14px;
-  flex-shrink: 0;
-  transition: color 0.2s var(--ease-smooth);
-}
-.legend.is-collapsed:hover .legend-caret,
-.legend.is-open .legend-caret { color: var(--c-primary-500); }
 
-.legend-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.inkborn-eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  font-weight: 600;
+  text-align: center;
+}
+
+.inkborn-logo {
+  width: auto;
+  height: 92px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+}
+
+.inkborn-actions {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
 }
-.legend-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 7px 10px;
+.inkborn-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--c-surface-border);
   border-radius: var(--r-md);
-  background: rgba(255,255,255,0.015);
-  border: 1px solid transparent;
-  font-size: var(--fs-md);
-  transition: background 0.18s var(--ease-smooth), border-color 0.18s var(--ease-smooth);
+  color: var(--c-text-desc);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-snappy),
+              background 0.2s var(--ease-smooth),
+              color 0.2s var(--ease-smooth);
 }
-.legend-item:hover {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--c-surface-border);
-}
-.legend-icon-wrap {
-  position: relative;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px;
+.inkborn-action-icon {
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
 }
-.legend-icon {
-  width: 100%; height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
-}
-.legend-name {
-  flex: 1;
-  color: var(--c-text-desc);
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.legend-pts {
-  font-weight: 700;
+.inkborn-action:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  background: rgba(212, 175, 55, 0.08);
   color: var(--c-primary-500);
-  font-variant-numeric: tabular-nums;
-  font-size: 14px;
-  min-width: 22px;
-  text-align: right;
-  font-family: var(--font-hero);
+}
+.inkborn-action:focus-visible {
+  outline: 2px solid var(--c-primary-500);
+  outline-offset: 2px;
+}
+/* YouTube-specific hover — use the ruby ink palette as a brand nod.
+   Same shape/weight as the default hover, just shifted to red. */
+.inkborn-action--youtube:hover {
+  border-color: rgba(239, 68, 68, 0.55);
+  background: rgba(239, 68, 68, 0.10);
+  color: var(--ink-ruby-text);
+}
+.inkborn-action--youtube:focus-visible {
+  outline-color: var(--ink-ruby-border);
 }
 
 /* ── Player grid ─────────────────────────────────────────────── */
@@ -1182,15 +1155,12 @@ button { font-family: inherit; }
 
 /* ── Tablet (≤ 1024px) ───────────────────────────────────────── */
 @media (max-width: 1024px) {
+  /* Keep hero + credit side-by-side; the credit is narrower so the
+     hero retains its breathing room. Only at mobile widths (≤720px)
+     does the row stack. */
   .top-row {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .legend { position: static; }
-  .legend.is-open .legend-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 6px;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 24px;
   }
   /* Two players per row — keep cards readable but compact */
   .players-grid {
@@ -1204,12 +1174,20 @@ button { font-family: inherit; }
   .rarity-icon-wrap { width: 28px; height: 28px; }
   .rarity-name { font-size: 11px; }
   .rarity-pts { font-size: 9px; }
+  /* Trim the Inkborn card slightly so the narrower column reads right */
+  .inkborn-credit { gap: 12px; padding: 18px 16px; }
+  .inkborn-logo { height: 76px; }
 }
 
 /* ── Mobile (≤ 720px) ────────────────────────────────────────── */
 @media (max-width: 720px) {
   .page { padding: 18px 16px 60px; }
   .page-header { gap: 16px; }
+  /* At true mobile width, stack hero + credit so the hero gets the
+     full screen width. Un-stick the credit since it now flows below. */
+  .top-row { grid-template-columns: 1fr; gap: 18px; }
+  .inkborn-credit { position: static; gap: 14px; padding: 22px 20px; }
+  .inkborn-logo { height: 92px; }
   .header-stats {
     gap: 0;
     flex-wrap: wrap;
@@ -1270,5 +1248,4 @@ button { font-family: inherit; }
   .rarity-count { top: 2px; right: 2px; min-width: 16px; height: 16px; font-size: 9px; }
 
   .top-row { gap: 14px; margin-bottom: 20px; }
-  .legend.is-open .legend-list { grid-template-columns: 1fr 1fr; }
 }
