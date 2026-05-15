@@ -196,6 +196,12 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
 }
 
 function recapText(recap: Recap): string {
-  if (!recap.champion) return "Box opening complete";
-  return `${recap.champion.name} won with ${recap.champion.score} points`;
+  if (recap.champions.length === 0) return "Box opening complete";
+  if (recap.champions.length === 1) {
+    const c = recap.champions[0]!;
+    return `${c.name} won with ${c.score} points`;
+  }
+  const names = recap.champions.map((c) => c.name).join(" & ");
+  const score = recap.champions[0]!.score;
+  return `${names} tied at ${score} points`;
 }

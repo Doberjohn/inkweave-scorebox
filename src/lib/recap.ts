@@ -12,7 +12,10 @@ export interface RecapPlayer {
 
 export interface Recap {
   date: Date;
-  champion: RecapPlayer | null;
+  /** Rank-1 player(s). Length 0 when nobody has scored, 1 for a solo
+   *  champion, 2+ when multiple players share the top score. */
+  champions: RecapPlayer[];
+  /** Everyone with rank > 1, sorted by rank ascending. */
   rest: RecapPlayer[];
 }
 
@@ -37,12 +40,12 @@ function toRecapPlayer(player: Player, rank: number, score: number): RecapPlayer
 
 export function buildRecap(players: Player[], now: Date = new Date()): Recap {
   if (players.length === 0) {
-    return { date: now, champion: null, rest: [] };
+    return { date: now, champions: [], rest: [] };
   }
 
   const scoreboard = computeScoreboard(players);
   if (scoreboard.topScore === 0) {
-    return { date: now, champion: null, rest: [] };
+    return { date: now, champions: [], rest: [] };
   }
 
   const ranked = players
@@ -51,8 +54,9 @@ export function buildRecap(players: Player[], now: Date = new Date()): Recap {
       if (!r) throw new Error(`Unranked player ${p.id}`);
       return toRecapPlayer(p, r.rank, r.score);
     })
-    .sort((a, b) => a.rank - b.rank || b.score - a.score);
+    .sort((a, b) => a.rank - b.rank);
 
-  const [champion, ...rest] = ranked;
-  return { date: now, champion: champion ?? null, rest };
+  const champions = ranked.filter((r) => r.rank === 1);
+  const rest = ranked.filter((r) => r.rank !== 1);
+  return { date: now, champions, rest };
 }

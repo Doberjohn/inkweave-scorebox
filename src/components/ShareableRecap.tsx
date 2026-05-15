@@ -17,7 +17,7 @@ function rankLabel(rank: number): string {
   return `${rank}TH`;
 }
 
-function ChampionBlock({ champion }: { champion: RecapPlayer }) {
+function SoloChampion({ champion }: { champion: RecapPlayer }) {
   return (
     <section className="shareable-recap__champion">
       <span className="shareable-recap__crown" aria-hidden="true">♛</span>
@@ -42,6 +42,28 @@ function ChampionBlock({ champion }: { champion: RecapPlayer }) {
   );
 }
 
+function TiedChampions({ champions }: { champions: RecapPlayer[] }) {
+  // All tied champions share the same score by construction.
+  const sharedScore = champions[0]?.score ?? 0;
+  return (
+    <section className="shareable-recap__champion shareable-recap__champion--tied">
+      <span className="shareable-recap__crown" aria-hidden="true">♛</span>
+      <span className="shareable-recap__tied-label">
+        {champions.length}-way tie for the lead
+      </span>
+      <div className="shareable-recap__tied-names">
+        {champions.map((c) => (
+          <h2 key={c.name} className="shareable-recap__champion-name shareable-recap__champion-name--tied">
+            {c.name}
+          </h2>
+        ))}
+      </div>
+      <div className="shareable-recap__champion-score">{sharedScore}</div>
+      <div className="shareable-recap__champion-meta">points each</div>
+    </section>
+  );
+}
+
 function RunnerUpRow({ player }: { player: RecapPlayer }) {
   return (
     <li className="shareable-recap__rest-row">
@@ -59,6 +81,8 @@ function RunnerUpRow({ player }: { player: RecapPlayer }) {
 
 export function ShareableRecap({ recap }: ShareableRecapProps) {
   const date = DATE_FMT.format(recap.date).toUpperCase();
+  const soloChampion = recap.champions.length === 1 ? recap.champions[0] : null;
+  const tiedChampions = recap.champions.length > 1 ? recap.champions : null;
 
   return (
     <div className="shareable-recap">
@@ -73,7 +97,8 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
         <span className="shareable-recap__eyebrow">Box Opening · {date}</span>
       </header>
 
-      {recap.champion && <ChampionBlock champion={recap.champion} />}
+      {soloChampion && <SoloChampion champion={soloChampion} />}
+      {tiedChampions && <TiedChampions champions={tiedChampions} />}
 
       {recap.rest.length > 0 && (
         <ul className="shareable-recap__rest">

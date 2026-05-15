@@ -458,6 +458,7 @@ button { font-family: inherit; }
   cursor: pointer;
   font-size: 18px;
   line-height: 1;
+  padding-top: 2px; /* optical centring — the × glyph sits high in its line box */
   transition: all 0.2s var(--ease-snappy);
   flex-shrink: 0;
 }
@@ -871,7 +872,7 @@ button { font-family: inherit; }
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
-  padding: 0;
+  padding: 2px 0 0 0; /* optical centring — the × glyph sits high in its line box */
   opacity: 0.5;
   transition: all 0.2s var(--ease-snappy);
 }
@@ -1015,6 +1016,7 @@ button { font-family: inherit; }
   cursor: pointer;
   font-size: 22px;
   line-height: 1;
+  padding-top: 3px; /* optical centring — the × glyph sits high in its line box */
   flex-shrink: 0;
   transition: all 0.2s var(--ease-snappy);
 }
@@ -1273,8 +1275,8 @@ button { font-family: inherit; }
 }
 .shareable-recap__eyebrow {
   display: inline-block;
-  font-size: 18px;
-  letter-spacing: 3.2px;
+  font-size: 24px;
+  letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--c-text-muted);
   font-weight: 600;
@@ -1337,6 +1339,28 @@ button { font-family: inherit; }
   border-radius: 999px;
   margin-top: 8px;
 }
+
+/* Tied co-champions: shared score, stacked names, "TIED" eyebrow.
+   Skip the biggest-pull chip — it would be ambiguous to show one
+   champion's pull as "THE" biggest when others tied for the lead. */
+.shareable-recap__tied-label {
+  font-size: 22px;
+  letter-spacing: 3.6px;
+  text-transform: uppercase;
+  color: var(--c-primary-500);
+  font-weight: 700;
+  text-shadow: 0 0 18px rgba(255, 185, 0, 0.4);
+}
+.shareable-recap__tied-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.shareable-recap__champion-name--tied {
+  font-size: 60px;     /* slightly smaller than solo (84px) since we stack */
+  line-height: 1.05;
+}
 .shareable-recap__top-pull-icon { width: 44px; height: 44px; object-fit: contain; }
 .shareable-recap__top-pull-text { display: flex; flex-direction: column; align-items: flex-start; }
 .shareable-recap__top-pull-eyebrow {
@@ -1373,8 +1397,8 @@ button { font-family: inherit; }
   padding: 4px 8px;
 }
 .shareable-recap__rest-rank {
-  font-size: 14px;
-  letter-spacing: 1.6px;
+  font-size: 20px;
+  letter-spacing: 2px;
   color: var(--c-text-dim);
   font-weight: 700;
 }
@@ -1395,7 +1419,7 @@ button { font-family: inherit; }
   color: var(--c-text);
 }
 .shareable-recap__rest-pull {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--c-text-muted);
   font-weight: 600;
   letter-spacing: 0.4px;
@@ -1411,17 +1435,17 @@ button { font-family: inherit; }
   text-align: center;
 }
 .shareable-recap__brand {
-  font-size: 22px;
-  letter-spacing: 4.2px;
+  font-size: 30px;
+  letter-spacing: 5px;
   text-transform: uppercase;
   color: var(--c-primary-500);
   font-weight: 700;
 }
 .shareable-recap__url {
-  margin-top: 8px;
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: 18px;
   color: var(--c-text-dim);
-  letter-spacing: 1.4px;
+  letter-spacing: 1.8px;
 }
 
 /* ── Share Results Modal ─────────────────────────────────────── */
@@ -1474,6 +1498,7 @@ button { font-family: inherit; }
   cursor: pointer;
   font-size: 22px;
   line-height: 1;
+  padding-top: 3px; /* optical centring — the × glyph sits high in its line box */
   transition: all 0.2s var(--ease-snappy);
 }
 .share-modal__close:hover {

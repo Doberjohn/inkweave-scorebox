@@ -17,28 +17,29 @@ function player(id: string, name: string, pullRarityIds: string[]): Player {
 }
 
 describe("buildRecap", () => {
-  it("returns null champion and empty rest for zero players", () => {
+  it("returns empty champions and rest for zero players", () => {
     const recap = buildRecap([], fixedNow);
-    expect(recap.champion).toBeNull();
+    expect(recap.champions).toEqual([]);
     expect(recap.rest).toEqual([]);
     expect(recap.date).toBe(fixedNow);
   });
 });
 
 describe("buildRecap — single player", () => {
-  it("makes the only player the champion when they have at least one pull", () => {
+  it("makes the only player the sole champion when they have at least one pull", () => {
     const recap = buildRecap([player("p1", "Alex", ["legendary"])], fixedNow);
-    expect(recap.champion?.name).toBe("Alex");
-    expect(recap.champion?.rank).toBe(1);
-    expect(recap.champion?.score).toBe(4);
-    expect(recap.champion?.pullCount).toBe(1);
-    expect(recap.champion?.topPull?.id).toBe("legendary");
+    expect(recap.champions).toHaveLength(1);
+    expect(recap.champions[0]?.name).toBe("Alex");
+    expect(recap.champions[0]?.rank).toBe(1);
+    expect(recap.champions[0]?.score).toBe(4);
+    expect(recap.champions[0]?.pullCount).toBe(1);
+    expect(recap.champions[0]?.topPull?.id).toBe("legendary");
     expect(recap.rest).toEqual([]);
   });
 
-  it("returns null champion when the only player has zero pulls", () => {
+  it("returns empty champions when the only player has zero pulls", () => {
     const recap = buildRecap([player("p1", "Alex", [])], fixedNow);
-    expect(recap.champion).toBeNull();
+    expect(recap.champions).toEqual([]);
     expect(recap.rest).toEqual([]);
   });
 });
@@ -51,30 +52,35 @@ describe("buildRecap — multi-player", () => {
       player("p3", "Cyrus", ["epic", "super-rare"]),          // 5 + 2 = 7
     ];
     const recap = buildRecap(players, fixedNow);
-    expect(recap.champion?.name).toBe("Bea");
-    expect(recap.champion?.score).toBe(25);
-    expect(recap.champion?.topPull?.id).toBe("iconic");
+    expect(recap.champions).toHaveLength(1);
+    expect(recap.champions[0]?.name).toBe("Bea");
+    expect(recap.champions[0]?.score).toBe(25);
+    expect(recap.champions[0]?.topPull?.id).toBe("iconic");
     expect(recap.rest.map((r) => r.name)).toEqual(["Cyrus", "Alex"]);
     expect(recap.rest[0]?.score).toBe(7);
     expect(recap.rest[0]?.topPull?.id).toBe("epic");
     expect(recap.rest[1]?.topPull?.id).toBe("legendary");
   });
 
-  it("uses dense ranking — tied scores share a rank", () => {
+  it("places ALL tied top-scorers in champions, leaving rank-2+ in rest", () => {
     const players = [
       player("p1", "Alex", ["iconic"]),    // 25
       player("p2", "Bea", ["iconic"]),     // 25
       player("p3", "Cyrus", ["legendary"]),// 4
     ];
     const recap = buildRecap(players, fixedNow);
-    expect(recap.champion?.rank).toBe(1);
-    expect(recap.rest[0]?.rank).toBe(1);
-    expect(recap.rest[1]?.rank).toBe(2);
+    expect(recap.champions).toHaveLength(2);
+    expect(recap.champions.map((c) => c.name).sort()).toEqual(["Alex", "Bea"]);
+    expect(recap.champions[0]?.rank).toBe(1);
+    expect(recap.champions[1]?.rank).toBe(1);
+    expect(recap.rest).toHaveLength(1);
+    expect(recap.rest[0]?.name).toBe("Cyrus");
+    expect(recap.rest[0]?.rank).toBe(2);
   });
 
   it("picks the highest-points pull as topPull, regardless of pull order", () => {
     const players = [player("p1", "Alex", ["epic", "iconic", "foil-rare"])];
     const recap = buildRecap(players, fixedNow);
-    expect(recap.champion?.topPull?.id).toBe("iconic");
+    expect(recap.champions[0]?.topPull?.id).toBe("iconic");
   });
 });
