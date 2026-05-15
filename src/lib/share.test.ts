@@ -1,6 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { downloadBlob } from "./share";
-import { copyImageToClipboard } from "./share";
+import { copyImageToClipboard, downloadBlob, isWebShareSupported, shareViaWebShare } from "./share";
 
 describe("downloadBlob", () => {
   let revokeSpy: ReturnType<typeof vi.spyOn>;
@@ -60,5 +59,50 @@ describe("copyImageToClipboard", () => {
     await expect(
       copyImageToClipboard(new Blob([], { type: "image/png" })),
     ).rejects.toThrow("denied");
+  });
+});
+
+describe("isWebShareSupported", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("returns false when navigator.share is missing", () => {
+    vi.stubGlobal("navigator", {});
+    expect(isWebShareSupported()).toBe(false);
+  });
+
+  it("returns false when canShare rejects file payloads", () => {
+    vi.stubGlobal("navigator", {
+      share: vi.fn(),
+      canShare: vi.fn().mockReturnValue(false),
+    });
+    expect(isWebShareSupported()).toBe(false);
+  });
+
+  it("returns true when canShare accepts a file payload", () => {
+    vi.stubGlobal("navigator", {
+      share: vi.fn(),
+      canShare: vi.fn().mockReturnValue(true),
+    });
+    expect(isWebShareSupported()).toBe(true);
+  });
+});
+
+describe("shareViaWebShare", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("calls navigator.share with a File built from the blob", async () => {
+    const shareMock = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal("navigator", { share: shareMock });
+    const blob = new Blob(["x"], { type: "image/png" });
+
+    await shareViaWebShare(blob, "scorebox-recap.png", "Scorebox", "Box opening recap");
+
+    expect(shareMock).toHaveBeenCalledTimes(1);
+    const arg = shareMock.mock.calls[0]![0];
+    expect(arg.title).toBe("Scorebox");
+    expect(arg.text).toBe("Box opening recap");
+    expect(arg.files).toHaveLength(1);
+    expect(arg.files[0].name).toBe("scorebox-recap.png");
+    expect(arg.files[0].type).toBe("image/png");
   });
 });
