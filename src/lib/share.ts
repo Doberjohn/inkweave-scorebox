@@ -48,7 +48,7 @@ export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
   clone.style.position = "fixed";
   clone.style.top = "0";
   clone.style.left = "0";
-  clone.style.zIndex = "1";
+  clone.style.zIndex = "105"; // above page content (z-index ~1), below modal backdrop (110)
   clone.style.pointerEvents = "none";
   document.body.appendChild(clone);
 

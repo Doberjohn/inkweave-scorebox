@@ -25,6 +25,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
   const titleId = useId();
   const stageRef = useRef<HTMLDivElement>(null);
   const recapRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [blob, setBlob] = useState<Blob | null>(null);
   const [generateError, setGenerateError] = useState<string | null>(null);
   const [shareStatus, setShareStatus] = useState<ActionStatus>("idle");
@@ -39,6 +40,11 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
   const filename = `scorebox-${isoDate(recap.date)}.png`;
 
   useBodyScrollLock(true);
+
+  // On open, move focus into the dialog so AT and keyboard users land in it.
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -126,7 +132,15 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
       >
         <header className="share-modal__header">
           <h2 id={titleId} className="share-modal__title">Share results</h2>
-          <button type="button" className="share-modal__close" onClick={onClose} aria-label="Close">×</button>
+          <button
+            ref={closeButtonRef}
+            type="button"
+            className="share-modal__close"
+            onClick={onClose}
+            aria-label="Close share dialog"
+          >
+            ×
+          </button>
         </header>
 
         <div className="share-modal__stage" ref={stageRef}>
@@ -152,6 +166,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
               className="share-action share-action--primary"
               onClick={onShare}
               disabled={!blob || shareStatus === "working"}
+              aria-label="Share recap image via the system share sheet"
             >
               {shareStatus === "ok" ? "Shared" : "Share"}
             </button>
@@ -161,6 +176,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
             className={canWebShare ? "share-action" : "share-action share-action--primary"}
             onClick={onCopy}
             disabled={!blob || copyStatus === "working"}
+            aria-label="Copy recap image to clipboard"
           >
             {copyStatus === "ok" ? "Copied" : copyStatus === "error" ? "Saved instead" : "Copy image"}
           </button>
@@ -169,6 +185,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
             className="share-action"
             onClick={onDownload}
             disabled={!blob || downloadStatus === "working"}
+            aria-label="Download recap image as a PNG file"
           >
             {downloadStatus === "ok" ? "Saved" : "Download"}
           </button>
