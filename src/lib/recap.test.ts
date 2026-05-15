@@ -42,3 +42,39 @@ describe("buildRecap — single player", () => {
     expect(recap.rest).toEqual([]);
   });
 });
+
+describe("buildRecap — multi-player", () => {
+  it("ranks players by score descending and surfaces each player's top pull", () => {
+    const players = [
+      player("p1", "Alex", ["foil-rare", "legendary"]),       // 1 + 4 = 5
+      player("p2", "Bea", ["iconic"]),                        // 25
+      player("p3", "Cyrus", ["epic", "super-rare"]),          // 5 + 2 = 7
+    ];
+    const recap = buildRecap(players, fixedNow);
+    expect(recap.champion?.name).toBe("Bea");
+    expect(recap.champion?.score).toBe(25);
+    expect(recap.champion?.topPull?.id).toBe("iconic");
+    expect(recap.rest.map((r) => r.name)).toEqual(["Cyrus", "Alex"]);
+    expect(recap.rest[0]?.score).toBe(7);
+    expect(recap.rest[0]?.topPull?.id).toBe("epic");
+    expect(recap.rest[1]?.topPull?.id).toBe("legendary");
+  });
+
+  it("uses dense ranking — tied scores share a rank", () => {
+    const players = [
+      player("p1", "Alex", ["iconic"]),    // 25
+      player("p2", "Bea", ["iconic"]),     // 25
+      player("p3", "Cyrus", ["legendary"]),// 4
+    ];
+    const recap = buildRecap(players, fixedNow);
+    expect(recap.champion?.rank).toBe(1);
+    expect(recap.rest[0]?.rank).toBe(1);
+    expect(recap.rest[1]?.rank).toBe(2);
+  });
+
+  it("picks the highest-points pull as topPull, regardless of pull order", () => {
+    const players = [player("p1", "Alex", ["epic", "iconic", "foil-rare"])];
+    const recap = buildRecap(players, fixedNow);
+    expect(recap.champion?.topPull?.id).toBe("iconic");
+  });
+});
