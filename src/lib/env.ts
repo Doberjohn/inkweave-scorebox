@@ -9,6 +9,15 @@ function intEnv(name: string, value: string | undefined, fallback: number): numb
   return n;
 }
 
+function stringEnv(value: string | undefined, fallback: string): string {
+  if (value === undefined || value === "") return fallback;
+  return value;
+}
+
+/** Current Lorcana set name displayed in the hero eyebrow. Override in
+ *  Vercel via VITE_LORCANA_SET when a new set ships. */
+export const LORCANA_SET = stringEnv(import.meta.env.VITE_LORCANA_SET, "Wilds Unknown");
+
 export const RARITY_POINTS: Readonly<Record<RarityId, number>> = {
   "foil-rare":       intEnv("VITE_POINTS_FOIL_RARE",       import.meta.env.VITE_POINTS_FOIL_RARE,       1),
   "super-rare":      intEnv("VITE_POINTS_SUPER_RARE",      import.meta.env.VITE_POINTS_SUPER_RARE,      2),

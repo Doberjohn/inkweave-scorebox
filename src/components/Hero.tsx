@@ -1,4 +1,5 @@
 import { useRef, useState, type FormEvent } from "react";
+import { LORCANA_SET } from "@/lib/env";
 
 interface HeroProps {
   onAddPlayer: (name: string) => void;
@@ -19,7 +20,7 @@ export function Hero({ onAddPlayer }: HeroProps) {
 
   return (
     <section className="hero">
-      <div className="eyebrow">CORE · BOX OPENING · LIVE TALLY</div>
+      <div className="eyebrow">Lorcana · Box opening · {LORCANA_SET}</div>
       <h1 className="hero-title-text">
         Score the <span className="hero-accent">box</span>
       </h1>
