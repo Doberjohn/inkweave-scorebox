@@ -1,6 +1,9 @@
 import type { Recap, RecapPlayer } from "@/lib/recap";
 import inkbornLogo from "@/design-system/assets/inkborn.png";
 import inkweaveLogo from "@/design-system/assets/logo.svg";
+import { QrCode } from "./QrCode";
+
+const SCOREBOX_URL = "https://scorebox.inkweave.ink";
 
 interface ShareableRecapProps {
   recap: Recap;
@@ -129,8 +132,11 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
               alt="Inkweave"
               className="shareable-recap__inkweave-logo"
             />
-            <span className="shareable-recap__inkweave-divider" aria-hidden="true" />
             <span className="shareable-recap__inkweave-section">Scorebox</span>
+          </div>
+          <div className="shareable-recap__qr">
+            <QrCode data={SCOREBOX_URL} size={160} />
+            <span className="shareable-recap__qr-label">Scan to play</span>
           </div>
           <div className="shareable-recap__attribution">
             <span className="shareable-recap__attribution-eyebrow">Scoring system by</span>
