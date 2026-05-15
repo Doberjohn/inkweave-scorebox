@@ -36,12 +36,32 @@ export async function shareViaWebShare(
 
 export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
   await document.fonts.ready;
-  const blob = await toBlob(node, {
-    width: 1080,
-    height: 1080,
-    pixelRatio: 1,
-    backgroundColor: "#0d0d14",
-  });
-  if (!blob) throw new Error("Failed to generate PNG from recap node");
-  return blob;
+
+  // The visible recap is scaled down (transform: scale(<1>)) to fit the modal
+  // preview, but html-to-image captures whatever transform is applied. Clone
+  // into a fresh container at native 1080x1080 with no transform, snapshot
+  // that, then dispose. The clone is positioned on-screen behind the modal
+  // backdrop so the browser actually paints it (off-screen positioning makes
+  // html-to-image emit a blank canvas).
+  const clone = node.cloneNode(true) as HTMLElement;
+  clone.style.transform = "none";
+  clone.style.position = "fixed";
+  clone.style.top = "0";
+  clone.style.left = "0";
+  clone.style.zIndex = "1";
+  clone.style.pointerEvents = "none";
+  document.body.appendChild(clone);
+
+  try {
+    const blob = await toBlob(clone, {
+      width: 1080,
+      height: 1080,
+      pixelRatio: 1,
+      backgroundColor: "#0d0d14",
+    });
+    if (!blob) throw new Error("Failed to generate PNG from recap node");
+    return blob;
+  } finally {
+    clone.remove();
+  }
 }

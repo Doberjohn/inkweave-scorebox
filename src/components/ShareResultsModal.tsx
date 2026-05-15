@@ -23,16 +23,33 @@ function isoDate(d: Date): string {
 
 export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
   const titleId = useId();
+  const stageRef = useRef<HTMLDivElement>(null);
   const recapRef = useRef<HTMLDivElement>(null);
   const [blob, setBlob] = useState<Blob | null>(null);
   const [generateError, setGenerateError] = useState<string | null>(null);
   const [shareStatus, setShareStatus] = useState<ActionStatus>("idle");
   const [copyStatus, setCopyStatus] = useState<ActionStatus>("idle");
   const [downloadStatus, setDownloadStatus] = useState<ActionStatus>("idle");
+  // Scale that fits the 1080x1080 recap into the modal's fluid stage. JS-driven
+  // because pure CSS can't divide a length by a length to produce a unitless
+  // <number> for transform: scale(). 0.46 (≈500/1080) is a sane initial guess
+  // until ResizeObserver fires on first paint.
+  const [stageScale, setStageScale] = useState(0.46);
   const canWebShare = isWebShareSupported();
   const filename = `scorebox-${isoDate(recap.date)}.png`;
 
   useBodyScrollLock(true);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width ?? 0;
+      if (width > 0) setStageScale(width / 1080);
+    });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -112,8 +129,12 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
           <button type="button" className="share-modal__close" onClick={onClose} aria-label="Close">×</button>
         </header>
 
-        <div className="share-modal__stage">
-          <div className="share-modal__stage-inner" ref={recapRef}>
+        <div className="share-modal__stage" ref={stageRef}>
+          <div
+            className="share-modal__stage-inner"
+            ref={recapRef}
+            style={{ transform: `scale(${stageScale})` }}
+          >
             <ShareableRecap recap={recap} />
           </div>
         </div>

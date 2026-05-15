@@ -1503,10 +1503,8 @@ button { font-family: inherit; }
   width: 1080px;
   height: 1080px;
   transform-origin: top left;
-  transform: scale(calc((100cqw) / 1080));
-}
-@supports not (container-type: inline-size) {
-  .share-modal__stage-inner { transform: scale(0.46); } /* fallback for older browsers */
+  /* transform: scale(...) is set inline by ShareResultsModal via a ResizeObserver;
+     CSS cannot divide a length by a length to produce the unitless number scale() needs. */
 }
 
 .share-modal__error {
