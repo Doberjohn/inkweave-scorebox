@@ -5,6 +5,7 @@ import type { RankedPlayer, RarityId } from "@/types";
 import { AnimatedNumber } from "./AnimatedNumber";
 import { RarityButton } from "./RarityButton";
 import { PullsLog } from "./PullsLog";
+import { XIcon } from "./XIcon";
 
 interface PlayerCardProps {
   ranked: RankedPlayer;
@@ -99,7 +100,7 @@ export function PlayerCard({
             title="Remove player"
             aria-label={`Remove ${player.name}`}
           >
-            ×
+            <XIcon />
           </button>
         </div>
         <div className="score-row">

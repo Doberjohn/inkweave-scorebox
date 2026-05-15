@@ -1,6 +1,7 @@
 import { type CSSProperties } from "react";
 import { RARITY_BY_ID } from "@/data/rarities";
 import type { Pull } from "@/types";
+import { XIcon } from "./XIcon";
 
 type IconCSSVars = CSSProperties & { "--icon-url"?: string };
 
@@ -49,7 +50,7 @@ export function PullsLog({ pulls, layout, onUndo }: PullsLogProps) {
               aria-label={`Undo ${r.name} pull`}
               title="Undo this pull"
             >
-              ×
+              <XIcon size={10} />
             </button>
           </li>
         );

@@ -9,6 +9,7 @@ import {
 } from "@/lib/share";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { ShareableRecap } from "./ShareableRecap";
+import { XIcon } from "./XIcon";
 
 interface ShareResultsModalProps {
   recap: Recap;
@@ -139,7 +140,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
             onClick={onClose}
             aria-label="Close share dialog"
           >
-            ×
+            <XIcon size={16} />
           </button>
         </header>
 

@@ -456,9 +456,7 @@ button { font-family: inherit; }
   color: var(--c-text-dim);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 18px;
-  line-height: 1;
-  padding-top: 2px; /* optical centring — the × glyph sits high in its line box */
+  padding: 0;
   transition: all 0.2s var(--ease-snappy);
   flex-shrink: 0;
 }
@@ -870,9 +868,7 @@ button { font-family: inherit; }
   color: var(--c-text-dim);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 14px;
-  line-height: 1;
-  padding: 2px 0 0 0; /* optical centring — the × glyph sits high in its line box */
+  padding: 0;
   opacity: 0.5;
   transition: all 0.2s var(--ease-snappy);
 }
@@ -1014,9 +1010,7 @@ button { font-family: inherit; }
   color: var(--c-text-muted);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 22px;
-  line-height: 1;
-  padding-top: 3px; /* optical centring — the × glyph sits high in its line box */
+  padding: 0;
   flex-shrink: 0;
   transition: all 0.2s var(--ease-snappy);
 }
@@ -1496,9 +1490,7 @@ button { font-family: inherit; }
   color: var(--c-text-muted);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 22px;
-  line-height: 1;
-  padding-top: 3px; /* optical centring — the × glyph sits high in its line box */
+  padding: 0;
   transition: all 0.2s var(--ease-snappy);
 }
 .share-modal__close:hover {

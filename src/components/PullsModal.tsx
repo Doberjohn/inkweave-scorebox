@@ -3,6 +3,7 @@ import { scoreOf } from "@/lib/scoring";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import type { Player } from "@/types";
 import { PullsLog } from "./PullsLog";
+import { XIcon } from "./XIcon";
 
 interface PullsModalProps {
   player: Player | null;
@@ -55,7 +56,7 @@ export function PullsModal({ player, onClose, onUndoPull, onClearPulls }: PullsM
             onClick={onClose}
             aria-label="Close"
           >
-            ×
+            <XIcon size={16} />
           </button>
         </header>
 
