@@ -65,11 +65,34 @@ export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
   wrapper.appendChild(clone);
   document.body.appendChild(wrapper);
 
-  // html-to-image renders <img> tags by inlining them as data URLs; if an
-  // image hasn't finished decoding by the time toBlob fires, it bakes a
-  // blank/placeholder pixel into the PNG. Wait for every image in the
-  // cloned subtree to be fully decoded first.
+  // html-to-image needs each <img> to be inlineable as a data URL. Safari
+  // (iOS + macOS) silently drops PNGs in the foreignObject pipeline if it
+  // can't inline them itself — SVGs survive because they get serialised
+  // as text instead. Pre-fetch every image, convert to a data URL, and
+  // overwrite src on the clone so the SVG-serialisation path always has
+  // bytes it can embed directly.
   const imgs = Array.from(clone.querySelectorAll("img"));
+  await Promise.all(
+    imgs.map(async (img) => {
+      if (img.src.startsWith("data:")) return;
+      try {
+        const res = await fetch(img.src);
+        const blob = await res.blob();
+        img.src = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(reader.error);
+          reader.readAsDataURL(blob);
+        });
+      } catch {
+        // Network/CORS failure for one image shouldn't kill the whole
+        // snapshot — leave the original src and let html-to-image try.
+      }
+    }),
+  );
+
+  // Belt-and-braces: also wait for each (now data-URL) img to be decoded
+  // before snapshotting, so the rasteriser has pixels ready.
   await Promise.all(
     imgs.map((img) => img.decode().catch(() => undefined)),
   );
