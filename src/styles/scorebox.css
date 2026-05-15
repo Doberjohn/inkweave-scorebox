@@ -1423,3 +1423,146 @@ button { font-family: inherit; }
   color: var(--c-text-dim);
   letter-spacing: 1.4px;
 }
+
+/* ── Share Results Modal ─────────────────────────────────────── */
+.share-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: rgba(8, 8, 14, 0.78);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modalFade 0.18s var(--ease-smooth);
+}
+.share-modal {
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f19 100%);
+  border: 1px solid var(--c-surface-border);
+  border-radius: var(--r-card);
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  animation: modalSlide 0.28s var(--ease-bounce);
+}
+.share-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--c-surface-border);
+}
+.share-modal__title {
+  font-family: var(--font-hero);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--c-text);
+  margin: 0;
+}
+.share-modal__close {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent;
+  border: 1px solid var(--c-surface-border);
+  color: var(--c-text-muted);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  transition: all 0.2s var(--ease-snappy);
+}
+.share-modal__close:hover {
+  color: var(--c-error);
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Stage scales the native 1080x1080 recap into the modal width via
+   container-type + scaled child. The child stays 1080x1080 so html-to-image
+   captures it at native resolution. */
+.share-modal__stage {
+  position: relative;
+  margin: 16px 20px;
+  width: calc(100% - 40px);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--r-card);
+  border: 1px solid var(--c-surface-border);
+  background: var(--c-bg);
+  container-type: inline-size;
+}
+.share-modal__stage-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1080px;
+  height: 1080px;
+  transform-origin: top left;
+  transform: scale(calc((100cqw) / 1080));
+}
+@supports not (container-type: inline-size) {
+  .share-modal__stage-inner { transform: scale(0.46); } /* fallback for older browsers */
+}
+
+.share-modal__error {
+  margin: 0 20px 16px;
+  padding: 12px 14px;
+  background: var(--c-error-bg);
+  border: 1px solid var(--c-error-border);
+  border-radius: var(--r-md);
+  color: var(--c-error);
+  font-size: var(--fs-md);
+}
+
+.share-modal__actions {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--c-surface-border);
+}
+.share-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--c-surface-border);
+  border-radius: var(--r-md);
+  color: var(--c-text-desc);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease-snappy),
+              background 0.2s var(--ease-smooth),
+              color 0.2s var(--ease-smooth);
+}
+.share-action:hover:not(:disabled) {
+  border-color: rgba(212, 175, 55, 0.45);
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--c-primary-500);
+}
+.share-action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.share-action--primary {
+  background: var(--c-filter-gradient);
+  color: var(--c-filter-text);
+  border-color: transparent;
+  box-shadow: var(--shadow-filter);
+}
+.share-action--primary:hover:not(:disabled) {
+  color: var(--c-filter-text);
+  background: var(--c-filter-gradient);
+  border-color: transparent;
+}
