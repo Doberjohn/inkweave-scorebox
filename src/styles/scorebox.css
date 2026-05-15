@@ -258,15 +258,6 @@ button { font-family: inherit; }
   cursor: not-allowed;
   transform: none !important;
 }
-.plus-glyph {
-  font-size: 16px;
-  line-height: 1;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 1em;
-}
 
 /* ── Inkborn Credit ── sidebar card crediting the scoring system ─ */
 .inkborn-credit {
@@ -1248,4 +1239,187 @@ button { font-family: inherit; }
   .rarity-count { top: 2px; right: 2px; min-width: 16px; height: 16px; font-size: 9px; }
 
   .top-row { gap: 14px; margin-bottom: 20px; }
+}
+
+/* ── ShareableRecap ── 1080x1080 ceremonial recap canvas ──────── */
+.shareable-recap {
+  position: relative;
+  width: 1080px;
+  height: 1080px;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 64px 80px;
+  box-sizing: border-box;
+}
+.shareable-recap__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.shareable-recap__glow .orb-blue   { top: -200px; left: -120px; }
+.shareable-recap__glow .orb-purple { top: 20%;   right: -200px; }
+.shareable-recap__glow .orb-amber  { bottom: -180px; left: 24%; }
+.shareable-recap__glow .orb-teal   { bottom: 16%; right: 12%; }
+
+.shareable-recap__header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.shareable-recap__eyebrow {
+  display: inline-block;
+  font-size: 18px;
+  letter-spacing: 3.2px;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  font-weight: 600;
+}
+
+.shareable-recap__champion {
+  position: relative;
+  z-index: 1;
+  margin-top: 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.shareable-recap__crown {
+  color: var(--c-primary-500);
+  font-size: 56px;
+  line-height: 1;
+  filter: drop-shadow(0 0 18px rgba(255, 185, 0, 0.6));
+}
+.shareable-recap__champion-name {
+  font-family: var(--font-hero);
+  font-weight: 700;
+  font-size: 84px;
+  line-height: 1.05;
+  margin: 0;
+  background: linear-gradient(90deg, #faf1d3 0%, #d4af37 50%, #b29861 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding: 0 0.06em 0.06em;
+}
+.shareable-recap__champion-score {
+  font-family: var(--font-hero);
+  font-weight: 700;
+  font-size: 200px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #faf1d3 0%, #ffb900 60%, #b29861 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.shareable-recap__champion-meta {
+  font-size: 22px;
+  color: var(--c-text-muted);
+  letter-spacing: 0.4px;
+}
+
+.shareable-recap__top-pull-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 26px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(212, 175, 55, 0.08);
+  border-radius: 999px;
+  margin-top: 8px;
+}
+.shareable-recap__top-pull-icon { width: 44px; height: 44px; object-fit: contain; }
+.shareable-recap__top-pull-text { display: flex; flex-direction: column; align-items: flex-start; }
+.shareable-recap__top-pull-eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  font-weight: 600;
+}
+.shareable-recap__top-pull-name {
+  font-family: var(--font-hero);
+  font-size: 22px;
+  color: var(--c-text);
+  font-weight: 700;
+}
+.shareable-recap__top-pull-points { color: var(--c-primary-500); }
+
+.shareable-recap__rest {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 64px 0 0;
+  padding: 32px 0 0;
+  border-top: 1px solid var(--c-surface-border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.shareable-recap__rest-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto auto;
+  align-items: baseline;
+  gap: 24px;
+  padding: 4px 8px;
+}
+.shareable-recap__rest-rank {
+  font-size: 14px;
+  letter-spacing: 1.6px;
+  color: var(--c-text-dim);
+  font-weight: 700;
+}
+.shareable-recap__rest-name {
+  font-family: var(--font-hero);
+  font-size: 36px;
+  color: var(--c-text);
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shareable-recap__rest-score {
+  font-family: var(--font-hero);
+  font-size: 40px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-text);
+}
+.shareable-recap__rest-pull {
+  font-size: 16px;
+  color: var(--c-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.shareable-recap__footer {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 32px;
+  border-top: 1px solid var(--c-surface-border);
+  text-align: center;
+}
+.shareable-recap__brand {
+  font-size: 22px;
+  letter-spacing: 4.2px;
+  text-transform: uppercase;
+  color: var(--c-primary-500);
+  font-weight: 700;
+}
+.shareable-recap__url {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--c-text-dim);
+  letter-spacing: 1.4px;
 }
