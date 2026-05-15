@@ -1,6 +1,7 @@
 import type { Recap, RecapPlayer } from "@/lib/recap";
 import inkbornLogo from "@/design-system/assets/inkborn.png";
 import inkweaveLogo from "@/design-system/assets/logo.svg";
+import { LORCANA_SET } from "@/lib/env";
 import { QrCode } from "./QrCode";
 
 const SCOREBOX_URL = "https://scorebox.inkweave.ink";
@@ -105,7 +106,9 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
       </div>
 
       <header className="shareable-recap__header">
-        <span className="shareable-recap__eyebrow">Box Opening · {date}</span>
+        <span className="shareable-recap__eyebrow">
+          Box Opening · {LORCANA_SET} · {date}
+        </span>
       </header>
 
       {soloChampion && <SoloChampion champion={soloChampion} />}
