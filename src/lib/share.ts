@@ -1,3 +1,5 @@
+import { toBlob } from "html-to-image";
+
 export function downloadBlob(blob: Blob, filename: string): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -30,4 +32,16 @@ export async function shareViaWebShare(
 ): Promise<void> {
   const file = new File([blob], filename, { type: "image/png" });
   await navigator.share({ files: [file], title, text });
+}
+
+export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
+  await document.fonts.ready;
+  const blob = await toBlob(node, {
+    width: 1080,
+    height: 1080,
+    pixelRatio: 1,
+    backgroundColor: "#0d0d14",
+  });
+  if (!blob) throw new Error("Failed to generate PNG from recap node");
+  return blob;
 }
