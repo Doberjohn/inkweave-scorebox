@@ -65,6 +65,15 @@ export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
   wrapper.appendChild(clone);
   document.body.appendChild(wrapper);
 
+  // html-to-image renders <img> tags by inlining them as data URLs; if an
+  // image hasn't finished decoding by the time toBlob fires, it bakes a
+  // blank/placeholder pixel into the PNG. Wait for every image in the
+  // cloned subtree to be fully decoded first.
+  const imgs = Array.from(clone.querySelectorAll("img"));
+  await Promise.all(
+    imgs.map((img) => img.decode().catch(() => undefined)),
+  );
+
   try {
     const blob = await toBlob(clone, {
       width: 1080,

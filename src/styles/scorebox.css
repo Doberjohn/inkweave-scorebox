@@ -1430,7 +1430,23 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+}
+
+/* Footer row: Inkborn attribution on the left, Inkweave brand on the right,
+   separated by a thin vertical divider. Two credit blocks reading from
+   left to right: scoring system first (the content), then the platform. */
+.shareable-recap__footer-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+}
+.shareable-recap__footer-row-divider {
+  display: inline-block;
+  width: 1px;
+  height: 96px;
+  background: var(--c-surface-border);
 }
 
 /* Inkborn Heroes attribution — mirrors the InkbornCredit card in the live
@@ -1456,12 +1472,6 @@ button { font-family: inherit; }
   filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
 }
 
-.shareable-recap__credits {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
 /* Inkweave wordmark + Scorebox label — mirrors the live app's page header,
    scaled up for the 1080x1080 canvas. */
 .shareable-recap__inkweave-brand {
