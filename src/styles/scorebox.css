@@ -1279,23 +1279,23 @@ button { font-family: inherit; }
 .shareable-recap__champion {
   position: relative;
   z-index: 1;
-  margin-top: 56px;
+  margin-top: 24px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
 }
 .shareable-recap__crown {
   color: var(--c-primary-500);
-  font-size: 56px;
+  font-size: 44px;
   line-height: 1;
   filter: drop-shadow(0 0 18px rgba(255, 185, 0, 0.6));
 }
 .shareable-recap__champion-name {
   font-family: var(--font-hero);
   font-weight: 700;
-  font-size: 84px;
+  font-size: 76px;
   line-height: 1.05;
   margin: 0;
   background: linear-gradient(90deg, #faf1d3 0%, #d4af37 50%, #b29861 100%);
@@ -1308,7 +1308,7 @@ button { font-family: inherit; }
 .shareable-recap__champion-score {
   font-family: var(--font-hero);
   font-weight: 700;
-  font-size: 200px;
+  font-size: 168px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   background: linear-gradient(180deg, #faf1d3 0%, #ffb900 60%, #b29861 100%);
@@ -1376,12 +1376,12 @@ button { font-family: inherit; }
   position: relative;
   z-index: 1;
   list-style: none;
-  margin: 28px 0 0;
-  padding: 20px 0 0;
+  margin: 16px 0 0;
+  padding: 14px 0 0;
   border-top: 1px solid var(--c-surface-border);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 .shareable-recap__rest-row {
   display: grid;
@@ -1398,7 +1398,7 @@ button { font-family: inherit; }
 }
 .shareable-recap__rest-name {
   font-family: var(--font-hero);
-  font-size: 36px;
+  font-size: 32px;
   color: var(--c-text);
   font-weight: 700;
   overflow: hidden;
@@ -1407,7 +1407,7 @@ button { font-family: inherit; }
 }
 .shareable-recap__rest-score {
   font-family: var(--font-hero);
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: var(--c-text);
@@ -1432,13 +1432,12 @@ button { font-family: inherit; }
   position: relative;
   z-index: 1;
   margin-top: auto;
-  padding-top: 22px;
+  padding-top: 40px;
   border-top: 1px solid var(--c-surface-border);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
 }
 
 /* Footer row: Inkborn attribution on the left, Inkweave brand on the right,

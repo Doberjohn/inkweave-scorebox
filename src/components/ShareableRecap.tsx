@@ -15,7 +15,7 @@ const DATE_FMT = new Intl.DateTimeFormat("en-US", {
 // Largest number of runner-up rows we render before collapsing the
 // remainder into a "+ N more" line. Keeps the recap inside 1080x1080
 // even for large groups.
-const REST_VISIBLE_LIMIT = 4;
+const REST_VISIBLE_LIMIT = 3;
 
 function rankLabel(rank: number): string {
   if (rank === 1) return "1ST";
