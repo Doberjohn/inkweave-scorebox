@@ -40,17 +40,30 @@ export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
   // The visible recap is scaled down (transform: scale(<1>)) to fit the modal
   // preview, but html-to-image captures whatever transform is applied. Clone
   // into a fresh container at native 1080x1080 with no transform, snapshot
-  // that, then dispose. The clone is positioned on-screen behind the modal
-  // backdrop so the browser actually paints it (off-screen positioning makes
-  // html-to-image emit a blank canvas).
+  // that, then dispose.
+  //
+  // Hiding the clone is fussy:
+  //  - position off-screen (left: -10000px) → html-to-image emits a blank canvas
+  //  - opacity:0 / visibility:hidden → same problem
+  //  - on-screen but behind the modal backdrop → visible through the
+  //    semi-transparent backdrop, causing a brief "huge image flash"
+  //
+  // The reliable trick: wrap the clone in a 0×0 overflow:hidden container.
+  // The clone is still rendered (so html-to-image captures it correctly),
+  // but the container clips it down to nothing visually.
+  const wrapper = document.createElement("div");
+  wrapper.style.position = "fixed";
+  wrapper.style.top = "0";
+  wrapper.style.left = "0";
+  wrapper.style.width = "0";
+  wrapper.style.height = "0";
+  wrapper.style.overflow = "hidden";
+  wrapper.style.pointerEvents = "none";
+
   const clone = node.cloneNode(true) as HTMLElement;
   clone.style.transform = "none";
-  clone.style.position = "fixed";
-  clone.style.top = "0";
-  clone.style.left = "0";
-  clone.style.zIndex = "105"; // above page content (z-index ~1), below modal backdrop (110)
-  clone.style.pointerEvents = "none";
-  document.body.appendChild(clone);
+  wrapper.appendChild(clone);
+  document.body.appendChild(wrapper);
 
   try {
     const blob = await toBlob(clone, {
@@ -62,6 +75,6 @@ export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
     if (!blob) throw new Error("Failed to generate PNG from recap node");
     return blob;
   } finally {
-    clone.remove();
+    wrapper.remove();
   }
 }
