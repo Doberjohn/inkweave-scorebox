@@ -1241,7 +1241,9 @@ button { font-family: inherit; }
 .shareable-recap {
   position: relative;
   width: 1080px;
-  height: 1080px;
+  /* Height is content-driven — the recap grows/shrinks with player
+     count so we never get dead space below the footer. The modal
+     stage and generateRecapPng both read offsetHeight at runtime. */
   background: var(--c-bg);
   color: var(--c-text);
   font-family: var(--font-body);
@@ -1279,23 +1281,23 @@ button { font-family: inherit; }
 .shareable-recap__champion {
   position: relative;
   z-index: 1;
-  margin-top: 24px;
+  margin-top: 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
 }
 .shareable-recap__crown {
   color: var(--c-primary-500);
-  font-size: 44px;
+  font-size: 56px;
   line-height: 1;
   filter: drop-shadow(0 0 18px rgba(255, 185, 0, 0.6));
 }
 .shareable-recap__champion-name {
   font-family: var(--font-hero);
   font-weight: 700;
-  font-size: 76px;
+  font-size: 84px;
   line-height: 1.05;
   margin: 0;
   background: linear-gradient(90deg, #faf1d3 0%, #d4af37 50%, #b29861 100%);
@@ -1308,7 +1310,7 @@ button { font-family: inherit; }
 .shareable-recap__champion-score {
   font-family: var(--font-hero);
   font-weight: 700;
-  font-size: 168px;
+  font-size: 200px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   background: linear-gradient(180deg, #faf1d3 0%, #ffb900 60%, #b29861 100%);
@@ -1376,12 +1378,12 @@ button { font-family: inherit; }
   position: relative;
   z-index: 1;
   list-style: none;
-  margin: 16px 0 0;
-  padding: 14px 0 0;
+  margin: 40px 0 0;
+  padding: 24px 0 0;
   border-top: 1px solid var(--c-surface-border);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 .shareable-recap__rest-row {
   display: grid;
@@ -1557,26 +1559,25 @@ button { font-family: inherit; }
   background: rgba(239, 68, 68, 0.08);
 }
 
-/* Stage scales the native 1080x1080 recap into the modal width via
-   container-type + scaled child. The child stays 1080x1080 so html-to-image
-   captures it at native resolution. */
+/* Stage scales the recap (1080 wide, content-tall) into the modal
+   width via a JS-driven transform. Stage height is set inline by
+   ShareResultsModal — equal to inner.offsetHeight × scale — so the
+   scaled child fills it exactly with no aspect-ratio mismatch. */
 .share-modal__stage {
   position: relative;
   margin: 16px 20px;
   width: calc(100% - 40px);
-  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: var(--r-card);
   border: 1px solid var(--c-surface-border);
   background: var(--c-bg);
-  container-type: inline-size;
 }
 .share-modal__stage-inner {
   position: absolute;
   top: 0;
   left: 0;
   width: 1080px;
-  height: 1080px;
+  /* Height follows the .shareable-recap content (no fixed height). */
   transform-origin: top left;
   /* transform: scale(...) is set inline by ShareResultsModal via a ResizeObserver;
      CSS cannot divide a length by a length to produce the unitless number scale() needs. */

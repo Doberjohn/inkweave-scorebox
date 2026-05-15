@@ -13,9 +13,10 @@ const DATE_FMT = new Intl.DateTimeFormat("en-US", {
 });
 
 // Largest number of runner-up rows we render before collapsing the
-// remainder into a "+ N more" line. Keeps the recap inside 1080x1080
-// even for large groups.
-const REST_VISIBLE_LIMIT = 3;
+// remainder into a "+ N more" line. Now that the canvas height is
+// content-driven there's no overflow pressure, but very long lists at
+// PNG-thumb sizes get illegible, so we still cap.
+const REST_VISIBLE_LIMIT = 7;
 
 function rankLabel(rank: number): string {
   if (rank === 1) return "1ST";

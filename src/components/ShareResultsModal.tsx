@@ -32,11 +32,13 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
   const [shareStatus, setShareStatus] = useState<ActionStatus>("idle");
   const [copyStatus, setCopyStatus] = useState<ActionStatus>("idle");
   const [downloadStatus, setDownloadStatus] = useState<ActionStatus>("idle");
-  // Scale that fits the 1080x1080 recap into the modal's fluid stage. JS-driven
-  // because pure CSS can't divide a length by a length to produce a unitless
-  // <number> for transform: scale(). 0.46 (≈500/1080) is a sane initial guess
-  // until ResizeObserver fires on first paint.
+  // Scale that fits the 1080-wide recap into the modal's fluid stage, plus
+  // the resulting stage height (scale × inner.offsetHeight). Both are
+  // JS-driven because (a) pure CSS can't divide a length by a length to
+  // produce a unitless <number> for transform: scale(), and (b) the recap
+  // is now content-tall so the stage height changes with player count.
   const [stageScale, setStageScale] = useState(0.46);
+  const [stageHeight, setStageHeight] = useState(500);
   const canWebShare = isWebShareSupported();
   const filename = `scorebox-${isoDate(recap.date)}.png`;
 
@@ -49,12 +51,20 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
 
   useEffect(() => {
     const stage = stageRef.current;
-    if (!stage) return;
-    const observer = new ResizeObserver((entries) => {
-      const width = entries[0]?.contentRect.width ?? 0;
-      if (width > 0) setStageScale(width / 1080);
-    });
+    const inner = recapRef.current;
+    if (!stage || !inner) return;
+    function recompute() {
+      const stageWidth = stage?.clientWidth ?? 0;
+      const innerHeight = inner?.offsetHeight ?? 0;
+      if (stageWidth <= 0 || innerHeight <= 0) return;
+      const scale = stageWidth / 1080;
+      setStageScale(scale);
+      setStageHeight(innerHeight * scale);
+    }
+    const observer = new ResizeObserver(recompute);
     observer.observe(stage);
+    observer.observe(inner);
+    recompute();
     return () => observer.disconnect();
   }, []);
 
@@ -144,7 +154,11 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
           </button>
         </header>
 
-        <div className="share-modal__stage" ref={stageRef}>
+        <div
+          className="share-modal__stage"
+          ref={stageRef}
+          style={{ height: stageHeight }}
+        >
           <div
             className="share-modal__stage-inner"
             ref={recapRef}

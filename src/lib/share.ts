@@ -74,10 +74,15 @@ export async function generateRecapPng(node: HTMLElement): Promise<Blob> {
     imgs.map((img) => img.decode().catch(() => undefined)),
   );
 
+  // Capture at the clone's actual rendered size. Width is locked to 1080
+  // by CSS; height is content-driven (varies with player count).
+  const width = clone.offsetWidth;
+  const height = clone.offsetHeight;
+
   try {
     const blob = await toBlob(clone, {
-      width: 1080,
-      height: 1080,
+      width,
+      height,
       pixelRatio: 1,
       backgroundColor: "#0d0d14",
     });
