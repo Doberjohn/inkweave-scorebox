@@ -1,5 +1,6 @@
 import type { Recap, RecapPlayer } from "@/lib/recap";
 import inkbornLogo from "@/design-system/assets/inkborn.png";
+import inkweaveLogo from "@/design-system/assets/logo.svg";
 
 interface ShareableRecapProps {
   recap: Recap;
@@ -117,7 +118,15 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
           />
         </div>
         <div className="shareable-recap__credits">
-          <div className="shareable-recap__brand">INKWEAVE SCOREBOX</div>
+          <div className="shareable-recap__inkweave-brand">
+            <img
+              src={inkweaveLogo}
+              alt="Inkweave"
+              className="shareable-recap__inkweave-logo"
+            />
+            <span className="shareable-recap__inkweave-divider" aria-hidden="true" />
+            <span className="shareable-recap__inkweave-section">Scorebox</span>
+          </div>
           <div className="shareable-recap__url">scorebox.inkweave.ink</div>
         </div>
       </footer>
