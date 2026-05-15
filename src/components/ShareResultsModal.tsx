@@ -64,6 +64,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
     try {
       await shareViaWebShare(blob, filename, "Scorebox — Box Opening Recap", recapText(recap));
       setShareStatus("ok");
+      setTimeout(() => setShareStatus("idle"), 2000);
     } catch {
       setShareStatus("idle"); // user cancelling the share sheet is a normal no-op
     }
@@ -93,6 +94,7 @@ export function ShareResultsModal({ recap, onClose }: ShareResultsModalProps) {
       setTimeout(() => setDownloadStatus("idle"), 2000);
     } catch {
       setDownloadStatus("error");
+      setTimeout(() => setDownloadStatus("idle"), 2500);
     }
   }
 
