@@ -110,15 +110,6 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
 
       <footer className="shareable-recap__footer">
         <div className="shareable-recap__footer-row">
-          <div className="shareable-recap__attribution">
-            <span className="shareable-recap__attribution-eyebrow">Scoring system by</span>
-            <img
-              src={inkbornLogo}
-              alt="Inkborn Heroes"
-              className="shareable-recap__attribution-logo"
-            />
-          </div>
-          <span className="shareable-recap__footer-row-divider" aria-hidden="true" />
           <div className="shareable-recap__inkweave-brand">
             <img
               src={inkweaveLogo}
@@ -127,6 +118,15 @@ export function ShareableRecap({ recap }: ShareableRecapProps) {
             />
             <span className="shareable-recap__inkweave-divider" aria-hidden="true" />
             <span className="shareable-recap__inkweave-section">Scorebox</span>
+          </div>
+          <span className="shareable-recap__footer-row-divider" aria-hidden="true" />
+          <div className="shareable-recap__attribution">
+            <span className="shareable-recap__attribution-eyebrow">Scoring system by</span>
+            <img
+              src={inkbornLogo}
+              alt="Inkborn Heroes"
+              className="shareable-recap__attribution-logo"
+            />
           </div>
         </div>
         <div className="shareable-recap__url">scorebox.inkweave.ink</div>
