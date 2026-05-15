@@ -40,8 +40,7 @@ export function Hero({ onAddPlayer }: HeroProps) {
           aria-label="Player name"
         />
         <button type="submit" className="cta" disabled={!name.trim()}>
-          <span className="plus-glyph" aria-hidden="true">+</span>
-          <span>Add friend</span>
+          Add friend
         </button>
       </form>
     </section>
