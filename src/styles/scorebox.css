@@ -1424,9 +1424,43 @@ button { font-family: inherit; }
   position: relative;
   z-index: 1;
   margin-top: auto;
-  padding-top: 32px;
+  padding-top: 28px;
   border-top: 1px solid var(--c-surface-border);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+/* Inkborn Heroes attribution — mirrors the InkbornCredit card in the live
+   app. Sits above the Inkweave brand mark so anyone seeing the image knows
+   the scoring system is theirs. */
+.shareable-recap__attribution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.shareable-recap__attribution-eyebrow {
+  font-size: 16px;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  font-weight: 600;
+}
+.shareable-recap__attribution-logo {
+  width: auto;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+}
+
+.shareable-recap__credits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 .shareable-recap__brand {
   font-size: 30px;
@@ -1436,7 +1470,6 @@ button { font-family: inherit; }
   font-weight: 700;
 }
 .shareable-recap__url {
-  margin-top: 10px;
   font-size: 18px;
   color: var(--c-text-dim);
   letter-spacing: 1.8px;
