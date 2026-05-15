@@ -1442,14 +1442,15 @@ button { font-family: inherit; }
   align-items: center;
 }
 
-/* Footer row: Inkweave brand on the left, themed QR centre, Inkborn
-   attribution on the right. Vertically centre-aligned so the three
-   columns sit on a shared eye-line despite varying heights. */
+/* Footer row: Inkweave brand pinned to the start, themed QR centred,
+   Inkborn attribution pinned to the end. space-between distributes
+   the three columns to the edges + middle of the recap width. */
 .shareable-recap__footer-row {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 56px;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px;
 }
 
 .shareable-recap__qr {
@@ -1461,7 +1462,6 @@ button { font-family: inherit; }
 .qr-code {
   width: 160px;
   height: 160px;
-  padding: 12px;
   background: rgba(212, 175, 55, 0.04);
   border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 14px;
