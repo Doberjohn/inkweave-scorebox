@@ -92,6 +92,33 @@ button { font-family: inherit; }
   font-weight: 500;
 }
 
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--c-surface-border);
+  border-radius: var(--r-sm);
+  color: var(--c-text-muted);
+  font-size: 12px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s var(--ease-smooth),
+              border-color 0.2s var(--ease-smooth),
+              background 0.2s var(--ease-smooth);
+}
+.repo-link:hover {
+  color: var(--c-primary-500);
+  border-color: var(--c-primary-500);
+  background: rgba(255, 185, 0, 0.06);
+}
+.repo-link:focus-visible {
+  outline: 2px solid var(--c-primary-500);
+  outline-offset: 3px;
+}
+
 .header-stats {
   display: flex; align-items: stretch; gap: 4px;
 }
@@ -1170,6 +1197,8 @@ button { font-family: inherit; }
 @media (max-width: 720px) {
   .page { padding: 18px 16px 60px; }
   .page-header { gap: 16px; }
+  .repo-link { padding: 7px 10px; }
+  .repo-link-label { display: none; }
   /* At true mobile width, stack hero + credit so the hero gets the
      full screen width. Un-stick the credit since it now flows below. */
   .top-row { grid-template-columns: 1fr; gap: 18px; }
